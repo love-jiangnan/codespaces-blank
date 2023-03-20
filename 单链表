@@ -1,0 +1,124 @@
+#define OK 1
+#define ERROR 0
+#define TRUE 1
+#define FALSE 0
+typedef int Status;
+
+#include<iostream>
+#include<string.h>
+using namespace std;
+typedef int ElemType;//定义链表
+typedef struct node {
+	ElemType data;
+	struct node* next;
+}node, * Pnode;
+
+typedef SqList;
+Status GetElem(SqList L, int i, ElemType* e) {//获得数据长度
+	if (L.length == 0 || i<1 || i>L.length)
+		return ERROR;//返回OK代表1，否则为0
+	*e = L.data[i - 1];
+}
+
+#define MAXSIZE 20;//定义存储初始变量
+typedef struct {
+	ElemType data[MAXSIZE];
+	int length;
+};
+Status IntiList(SqList* L, int i) {//创建链表
+	Status* L = (Status*)malloc(sizeof(Status));
+	if (!L) {
+		return ERROR;
+	}
+	L->data = i;//存入内存
+	L->next = NULL;//
+	return L;
+}
+Status ListDestroy(SqList* L, int i) {//链表销毁
+	SqList* cur = L;
+	SqList* next = NULL;
+	while (cur) {
+		next = cur->next;//覆盖
+		free(cur);//释放内存
+		cur = next;
+	}
+}
+
+Status ListInsert(SqList* L, int i, ElemType e) {//插入元素
+	int k;
+	if (L->length == MAXSIZE) {//线性表满了
+		return ERROR;
+	}
+	if (i < 1 || i>L->Length + 1) {//i不在有效范围
+		return ERROR;
+	}
+	if (i <= L->length) {//插入数据不在表尾
+		for (k = L->length - 1; k >= i - 1; k--)//将插入位置后的元素后移一位
+			L->data[k + 1] = L->data[k];
+	}
+	L->data[i - 1] = e;//插入新元素
+	L->length++;
+	return OK;
+}
+
+Status ListDelete(SqList* L, int i, ElemType* e) {
+	int k;
+	if (L->length == 0)//线性表满了
+		return ERROR;
+	if (i < 1 || i>L->Length)//i不在有效范围
+		return ERROR;
+	*e = L->data[i - 1];//指向该元素
+	if (i <= L->length) {//插入数据不在表尾
+		for (k = i; k < L->length; k++)//将插入位置后的元素后移一位
+			L->data[k - 1] = L->data[k];
+	}
+	L->length--;
+	return OK;
+}
+Pnode head = (Pnode)malloc(sizeof(Pnode));
+Status TraverseList(SqList* L) {//链表遍历
+	int i = 1;
+	Pnode p = head;//头节点
+	while (p->next != NULL) {
+		p = p->next;
+		cout << "the NO." << i << "=" << p->data << endl;
+		i++;
+	}
+}
+Status SearchList(SqList L, ElemType e) {
+
+}
+typedef struct LNode {
+	ElemType data;
+	struct LNode* next;
+} LNode, * LinkedList;
+LNode* ReverseEvenList(LinkedList* L){
+	LNode* p, q;
+
+}
+
+LNode* FindMidNode(SqList* L) {//统计节点个数
+	int len = 0;
+	LNode* node = L->next;
+	while (node != NULL) {
+		len++;
+		node = node->next;
+	}
+	int num;//计算中间节点的序号，分奇偶讨论
+	if (len % 2 == 0) {
+		num = len / 2;
+	}
+	else {
+		num = len / 2 + 1;
+	}
+	int count = 0;//扫描链表，查找中间节点
+	node = L->next;
+	while (node != NULL) {
+		count++;
+		if (count == num) {
+			break;
+		}
+		node = node->next;
+	}
+	return L->data;
+}
